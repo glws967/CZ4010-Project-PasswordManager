@@ -10,6 +10,9 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+import genpassword
+import addaccount
+import settings
 
 from library.api import updateVault
 class Ui_MainWindow(QtWidgets.QDialog):
@@ -352,13 +355,27 @@ class Ui_MainWindow(QtWidgets.QDialog):
             Info.setText("The above inputs must not be empty.")
 
     def OpenAddAccountWindow(self):
-                print()
+                self.w = addaccount.Ui_Form()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(410, 385)
+                self.w.setupUi(self.w,self.currentsession)
+                self.w.emitter.connect(self.onAccountCreated)
+                self.w.Dialog.show()
 
     def OpenSettingsWindow(self):
-                print()  
+                self.w = settings.Settings()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(322, 160)
+                self.w.setupUi(self.w.Dialog,self.currentsession)
+                self.w.Dialog.show()  
 
     def OpenGenPassWindow(self): 
-                print()
+                self.w = genpassword.Ui_GeneratePassword()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(410, 203)
+                self.w.setupUi(self.w.Dialog)
+                self.w.mainpassword.connect(self.setGeneratedPassword)
+                self.w.Dialog.show()
 
     def searchOnChange(self):
         self.generateAccountLabels(self.lnSearchAccount.text(),True)

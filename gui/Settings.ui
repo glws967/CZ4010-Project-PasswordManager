@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>322</width>
+    <height>160</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <widget class="QLabel" name="lblLock">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Lock after computer is idle for</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblClipboard">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Clear clipboard contents after</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cboxClipboard">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>70</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>5 Seconds </string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10  Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>15 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>20 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>30 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>45 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1 Minute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>90 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2 Minutes</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="cboxLock">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>20</y>
+     <width>121</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Never</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>30 Seconds</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1 Minute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>3 Minutes</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>5 Minutes</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10 Minutes</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>30 Minutes</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1 Hour</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2 Hours</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="btnSave">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>120</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
