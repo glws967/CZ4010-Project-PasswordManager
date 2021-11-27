@@ -60,7 +60,19 @@ The password vault will store all the user accounts. This vault will be then sto
 #### Generate Secure random passwords
 To generate a secure random password we make use of the pycryptodome Crypto.Random module. The password will be generated based on what the user has chosen for example to include symbols and digits to the generated password. The user will also be able to generate according to their desired length which is capped to 64 characters.
 
+## Security
+### Confidentiality
+- To achieve this in our project, we make use of a few cryptographic algorithms AES(CBC) and PBKDF2_SHA512.
 
+- The entire vault is being encrypted and decrypted locally before sending it to the firebase for storage, this ensures confidentiality of the vault as without decrypting it, the vault will be just a cipher text. This also ensures that no man in the middle attack is possible as we are not sending the key to the database, the key is generated locally.
+
+- By default the user account password is the GUI is concealed so to prevent shoulder surfing 
+
+### Authentication and Integrity
+When the user login,  Authentication Hash and Encrypted vault will be retrieved from the firebase. The Authentication hash is then compared with the user input. If these are identical, the user will be successfully authenticated and the Vault will be decrypted. Which ensures Authentication and Integrity.
+
+### Availability 
+We used cloud storage as it allows constant availability to the data needed for the application as Google is a major player in this field and data being stored with them are also being backed up, in many different places, thus even if something were to happen to a certain database, the data won't be lost. The code is also easily configurable so in case of a sudden incident we could also switch to Amazon cloud or Microsoft Azure.
 
 ### Other Features 
 #### Auto clear clipboard
