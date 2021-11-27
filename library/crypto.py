@@ -16,17 +16,23 @@ def generateIV():
     IV = get_random_bytes(16)
     return IV
 
+def generateSalt():
+    IV = get_random_bytes(32)
+    return IV
+
 def encryptVault(vaultString, key):
     data = addPad(vaultString)
     iv = generateIV()
-    aes = AES.new(key, AES.MODE_GCM, iv)
+    aes = AES.new(key, AES.MODE_CBC, iv)
     encrypted = aes.encrypt(str.encode(data))
     return iv + encrypted
+
     
 def decryptVault(cipherText, key):
     iv = cipherText[:16]
-    aes = AES.new(key, AES.MODE_GCM, iv)
+    aes = AES.new(key, AES.MODE_CBC, iv)
     return unPad(aes.decrypt(cipherText[16:])).decode('utf-8')
+
 
 def addPad(st):
     Pad = st + (32 - len(st) % 32) * chr(32 - len(st) % 32)
