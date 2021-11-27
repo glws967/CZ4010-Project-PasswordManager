@@ -76,7 +76,7 @@ We used cloud storage as it allows constant availability to the data needed for 
 
 ### Other Features 
 #### Auto clear clipboard
-After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
+After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. This prevents websites from sniffing user’s clipboard.Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
 
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
 
