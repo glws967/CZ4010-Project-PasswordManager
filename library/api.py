@@ -2,7 +2,6 @@ import base64
 import json
 
 import pyrebase
-from firebase_admin import db
 
 from library.crypto import decryptVault, encryptVault, getAuthHash, getKey
 from library.usersession import usersession
