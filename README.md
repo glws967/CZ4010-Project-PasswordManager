@@ -76,11 +76,11 @@ To make the password manager more convenient to the user we decided to store the
 #### Integrated Development Environment
 Visual studio Code - For developing the entire application, including graphical user interface (GUI)
 #### Libraries
--**Pyqt5** => GUI for password manager
-Firebase_admin 
--**Pyrebase 4** => To connect to google firebase alongside Pycryptodome
--**Hashlib** => For generation of authentication key and authentication hash
--**Pycryptodome** => For AES 256 bit (CBC) encryption and PRNG generator
+-**Pyqt5** => GUI for password manager  
+Firebase_admin  
+-**Pyrebase 4** => To connect to google firebase alongside Pycryptodome  
+-**Hashlib** => For generation of authentication key and authentication hash  
+-**Pycryptodome** => For AES 256 bit (CBC) encryption and PRNG generator  
 
 ###Google Firebase 
 Cloud-hosted real time database, to allow access to the vault anytime anywhere.
