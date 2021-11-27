@@ -39,12 +39,12 @@ class Ui_MainWindow(QtWidgets.QDialog):
         font.setPointSize(8)
         self.btnSettings.setFont(font)
         self.btnSettings.setObjectName("btnSettings")
-        icon1 = QtGui.QIcon()
-        directory=str(os.path.dirname(os.path.realpath(__file__))).split("\library",)[0]
+        # icon1 = QtGui.QIcon()
+        # directory=str(os.path.dirname(os.path.realpath(__file__))).split("\library",)[0]
         
-        icon1.addPixmap(QtGui.QPixmap(directory+"/images/gear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # icon1.addPixmap(QtGui.QPixmap(directory+"/images/gear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         
-        self.btnSettings.setIcon(icon1)
+        #self.btnSettings.setIcon(icon1)
         self.btnSettings.setIconSize(QtCore.QSize(40, 30))
         self.btnSettings.clicked.connect(self.OpenSettingsWindow)
         self.btnSettings.setText("Settings")

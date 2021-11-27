@@ -60,11 +60,25 @@ The password vault will store all the user accounts. This vault will be then sto
 #### Generate Secure random passwords
 To generate a secure random password we make use of the pycryptodome Crypto.Random module. The password will be generated based on what the user has chosen for example to include symbols and digits to the generated password. The user will also be able to generate according to their desired length which is capped to 64 characters.
 
-![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
+## Security
+### Confidentiality
+- To achieve this in our project, we make use of a few cryptographic algorithms AES(CBC) and PBKDF2_SHA512.
+
+- The entire vault is being encrypted and decrypted locally before sending it to the firebase for storage, this ensures confidentiality of the vault as without decrypting it, the vault will be just a cipher text. This also ensures that no man in the middle attack is possible as we are not sending the key to the database, the key is generated locally.
+
+- By default the user account password is the GUI is concealed so to prevent shoulder surfing 
+
+### Authentication and Integrity
+When the user login,  Authentication Hash and Encrypted vault will be retrieved from the firebase. The Authentication hash is then compared with the user input. If these are identical, the user will be successfully authenticated and the Vault will be decrypted. Which ensures Authentication and Integrity.
+
+### Availability 
+We used cloud storage as it allows constant availability to the data needed for the application as Google is a major player in this field and data being stored with them are also being backed up, in many different places, thus even if something were to happen to a certain database, the data won't be lost. The code is also easily configurable so in case of a sudden incident we could also switch to Amazon cloud or Microsoft Azure.
 
 ### Other Features 
 #### Auto clear clipboard
-After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
+After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. This prevents websites from sniffing user’s clipboard.Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
+
+![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
 
 #### Auto Lock after computer idle
 This feature is to lock the vault after the computer is idle, this is to prevent unintended access to the vault, as the vault will contains all the users credentials and password, having access to it is the equivalent of losing lots of accounts, therefore auto locking the vault will reduce the chances of others being able to access the vault. The time before locking can also be set.
@@ -72,7 +86,7 @@ This feature is to lock the vault after the computer is idle, this is to prevent
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/lock.png?raw=true)
 
 #### Cloud storage
-To make the password manager more convenient to the user we decided to store the password vault in a cloud storage, as compared to a local storage. As long as the user has an internet connection they will be able to retrieve their password easily. We used Google firebase Realtime Database to store the password vault.
+To make the password manager more convenient to the user we decided to store the password vault in a cloud storage (Google firebase Realtime Database), as compared to a local storage. As long as the user has an internet connection they will be able to retrieve their password easily.
 
 ## Development
 ### Python
@@ -89,16 +103,19 @@ Cloud-hosted real time database, to allow access to the vault anytime anywhere.
 
 
 ## Use of the code
-Make sure Python 3 is install 
-Clone this repository  
-Install the following libraries using the following:  
-pip install pyqt5  
-pip install pyrebase4  
-Run login.py       
+Make sure the latest Python 3 is installed.
+
+1. Clone this repository 
+2. Install the following libraries using the following:  
+3. pip install pyqt5  
+4. pip install pyrebase4  
+5. Run login.py       
+
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/login.png?raw=true)
 
-Register for an account if you don't have one, else good to go  
+6. Register for an account if you don't have one, else good to go  
 
+Or you can just download the ‘login.exe’ file under the releases pages.
 
 ## Glossary
 AES - Advanced Encryption Standard  
@@ -107,5 +124,5 @@ GUI - Graphical User Interface
 HMAC - Hash-Based Message Authentication Code  
 NIST- National Institute of Standards and Technology  
 PBKDF - Password-Based Key Derivation  
-PRF - Pseudo-Random Function  
+PRNG - Pseudo-Random Number Generator  
 SHA - Secure Hash Algorithms  
