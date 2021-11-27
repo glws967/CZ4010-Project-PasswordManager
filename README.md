@@ -64,10 +64,12 @@ To generate a secure random password we make use of the pycryptodome Crypto.Rand
 ### Other Features 
 #### Auto clear clipboard
 After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
+
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
 
 #### Auto Lock after computer idle
 This feature is to lock the vault after the computer is idle, this is to prevent unintended access to the vault, as the vault will contains all the users credentials and password, having access to it is the equivalent of losing lots of accounts, therefore auto locking the vault will reduce the chances of others being able to access the vault. The time before locking can also be set.
+
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/lock.png?raw=true)
 
 #### Cloud storage
@@ -95,6 +97,7 @@ pip install firebase_admin
 pip install pyrebase4  
 Run login.py       
 Register for an account if you don't have one, else good to go  
+
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/login.png?raw=true)
 
 ## Glossary
