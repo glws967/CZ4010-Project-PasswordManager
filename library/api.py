@@ -7,6 +7,9 @@ from library.crypto import decryptVault, encryptVault, getAuthHash, getKey
 from library.usersession import usersession
 
 def getConfig():
+    '''
+    returns firebase api connection
+    '''
     config={"apiKey": "AIzaSyCRrMaXBPx_GVbBJZzaaFsZxEeOGeh13xk",
             "authDomain": "cz4010project.firebaseapp.com",
             "databaseURL": "https://cz4010project-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -18,11 +21,18 @@ def getConfig():
     return config
 
 def initializeDatabaseConnection():
+    '''
+    initialize firebase connection
+    '''
     firebase = pyrebase.initialize_app(config=getConfig())
     global db 
     db = firebase.database()
         
 def login(username, password):
+    '''
+    Check if user exists
+    if exist decrypt vault and return session
+    '''
     authHash = getAuthHash(username, password)
     dbAuthHash = str(db.child("CZ4010DB").child("users").child(username).child('authHash').get().val())
     if  dbAuthHash == base64.b64encode(authHash).decode():
@@ -40,6 +50,11 @@ def login(username, password):
         return False
 
 def createNewAccount(username, password):
+    '''
+    Check if username have been used 
+    if new user create a empty vault and call updatevault
+    and return new session
+    '''
     authHash = getAuthHash(username, password)
     snapshot = db.child("CZ4010DB").child("users").child(username)
     if str(snapshot.child('userName').get().val()) == username:
@@ -52,6 +67,9 @@ def createNewAccount(username, password):
         return session        
 
 def updateVault(session):
+    '''
+    Encrypt the vault and update it to google firebase
+    '''
     snapshot = db.child("CZ4010DB").child("users").child(session.userName)
     vaultDict = session.vaultToDictionary()
     encryptedVault = encryptVault(json.dumps(vaultDict), session.key)

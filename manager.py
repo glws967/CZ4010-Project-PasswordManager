@@ -13,10 +13,9 @@ from PyQt5.QtWidgets import QMainWindow
 import genpassword
 import addaccount
 import settings
-
 from library.api import updateVault
 class Ui_MainWindow(QtWidgets.QDialog):
-
+    
     def setupUi(self, Dialog, session, parent, app):
         self.currentsession= session
         self.parentWindow =parent
@@ -37,16 +36,18 @@ class Ui_MainWindow(QtWidgets.QDialog):
         self.btnSettings = QtWidgets.QPushButton(self.centralwidget)
         self.btnSettings.setGeometry(QtCore.QRect(610, 10, 51, 41))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(8)
         self.btnSettings.setFont(font)
         self.btnSettings.setObjectName("btnSettings")
         icon1 = QtGui.QIcon()
         directory=str(os.path.dirname(os.path.realpath(__file__))).split("\library",)[0]
-
+        
         icon1.addPixmap(QtGui.QPixmap(directory+"/images/gear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        
         self.btnSettings.setIcon(icon1)
         self.btnSettings.setIconSize(QtCore.QSize(40, 30))
         self.btnSettings.clicked.connect(self.OpenSettingsWindow)
+        self.btnSettings.setText("Settings")
         self.btnLock = QtWidgets.QPushButton(self.centralwidget)
         self.btnLock.setGeometry(QtCore.QRect(490, 10, 111, 41))
         font = QtGui.QFont()
@@ -511,8 +512,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         self.lockTimer=QtCore.QTimer()
         if now == None:
             if self.currentsession.lock>0:
-                print("starting timer")
-                
                 if not self.lockTimer.isActive():
                     
                     self.lockTimer.start(self.currentsession.lock)

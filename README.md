@@ -89,7 +89,7 @@ Cloud-hosted real time database, to allow access to the vault anytime anywhere.
 
 
 ## Use of the code
-Make sure Python 3.10 is install (may not work on other versions, only tested on 3.10)  
+Make sure Python 3 is install 
 Clone this repository  
 Install the following libraries using the following:  
 pip install pyqt5  

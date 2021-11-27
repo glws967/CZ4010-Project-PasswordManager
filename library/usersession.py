@@ -12,6 +12,7 @@ class usersession(object):
 
     def clearVault(self):
         self.vault = []
+        
     def getUserAccount(self, name):
         account = next((a for a in self.vault if a.name == name), None)
         return account
