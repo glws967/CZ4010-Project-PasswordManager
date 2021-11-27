@@ -45,7 +45,7 @@ The secrets module is used for generating cryptographically strong random number
 #### Final selection for Cryptographically Secure PRNG library 
 We chose PyCryptodome because it is widely used and tested and as we also used it for encryption and decryption we decided not to install an additional library as it may cause more attack vectors if more libraries are installed.
 ### Selecting a Cloud Storage
-####Google Firebase
+#### Google Firebase
 Firebase is a cloud-hosted real time document store. iOS, Android, and JavaScript clients share one Realtime Database instance and automatically receive updates with the newest data. It is also one of the cheaper alternatives when compared to others at its level.
 #### Amazon DynamoDB
 Developers describe Amazon DynamoDB as "Fully managed NoSQL database service". All data items are stored on Solid State Drives (SSDs), and are replicated across 3 Availability Zones for high availability and durability. 
@@ -77,14 +77,12 @@ To make the password manager more convenient to the user we decided to store the
 Visual studio Code - For developing the entire application, including graphical user interface (GUI)
 #### Libraries
 -**Pyqt5** => GUI for password manager  
-Firebase_admin  
 -**Pyrebase 4** => To connect to google firebase alongside Pycryptodome  
 -**Hashlib** => For generation of authentication key and authentication hash  
 -**Pycryptodome** => For AES 256 bit (CBC) encryption and PRNG generator  
 
-###Google Firebase 
+### Google Firebase 
 Cloud-hosted real time database, to allow access to the vault anytime anywhere.
-
 
 ## Use of the code
 Make sure Python 3.10 is install (may not work on other versions, only tested on 3.10)  
@@ -104,5 +102,5 @@ GUI - Graphical User Interface
 HMAC - Hash-Based Message Authentication Code  
 NIST- National Institute of Standards and Technology  
 PBKDF - Password-Based Key Derivation  
-PRNG - Pseudo-Random Number Generator
+PRF - Pseudo-Random Function  
 SHA - Secure Hash Algorithms  
