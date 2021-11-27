@@ -60,11 +60,13 @@ The password vault will store all the user accounts. This vault will be then sto
 #### Generate Secure random passwords
 To generate a secure random password we make use of the pycryptodome Crypto.Random module. The password will be generated based on what the user has chosen for example to include symbols and digits to the generated password. The user will also be able to generate according to their desired length which is capped to 64 characters.
 
-![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
+
 
 ### Other Features 
 #### Auto clear clipboard
 After pasting the password to the website intended, the password itself is still stored in the clipboard, which can still be retrieved if intended, thus if an attacker has physical access to the computer after the user, the attacker can find out the password. Therefore we have come out with the feature of auto clear clipboard, in which users can set a time interval before the clipboard is being automatically cleared.
+
+![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/clipboard.png?raw=true)
 
 #### Auto Lock after computer idle
 This feature is to lock the vault after the computer is idle, this is to prevent unintended access to the vault, as the vault will contains all the users credentials and password, having access to it is the equivalent of losing lots of accounts, therefore auto locking the vault will reduce the chances of others being able to access the vault. The time before locking can also be set.
@@ -89,16 +91,19 @@ Cloud-hosted real time database, to allow access to the vault anytime anywhere.
 
 
 ## Use of the code
-Make sure Python 3 is install 
-Clone this repository  
-Install the following libraries using the following:  
-pip install pyqt5  
-pip install pyrebase4  
-Run login.py       
+Make sure the latest Python 3 is installed.
+
+1. Clone this repository 
+2. Install the following libraries using the following:  
+3. pip install pyqt5  
+4. pip install pyrebase4  
+5. Run login.py       
+
 ![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/login.png?raw=true)
 
-Register for an account if you don't have one, else good to go  
+6. Register for an account if you don't have one, else good to go  
 
+Or you can just download the ‘login.exe’ file under the releases pages.
 
 ## Glossary
 AES - Advanced Encryption Standard  
@@ -107,5 +112,5 @@ GUI - Graphical User Interface
 HMAC - Hash-Based Message Authentication Code  
 NIST- National Institute of Standards and Technology  
 PBKDF - Password-Based Key Derivation  
-PRNG - Pseudo-Random Number Generator   
+PRNG - Pseudo-Random Number Generator  
 SHA - Secure Hash Algorithms  
