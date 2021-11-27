@@ -107,5 +107,5 @@ GUI - Graphical User Interface
 HMAC - Hash-Based Message Authentication Code  
 NIST- National Institute of Standards and Technology  
 PBKDF - Password-Based Key Derivation  
-PRF - Pseudo-Random Function  
+PRNG - Pseudo-Random Number Generator   
 SHA - Secure Hash Algorithms  
