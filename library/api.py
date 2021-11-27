@@ -25,8 +25,8 @@ def initializeDatabaseConnection():
         
 def login(username, password):
     authHash = getAuthHash(username, password)
-
-    if str(db.child("CZ4010DB").child("users").child(username).child('authHash').get().val()) == base64.b64encode(authHash).decode():
+    dbAuthHash = str(db.child("CZ4010DB").child("users").child(username).child('authHash').get().val())
+    if  dbAuthHash == base64.b64encode(authHash).decode():
         cipher = base64.b64decode(str(db.child("CZ4010DB").child("users").child(username).child('vault').get().val()))
         lock = db.child("CZ4010DB").child("users").child(username).child('lock').get().val()
         clipboard = db.child("CZ4010DB").child("users").child(username).child('clipboard').get().val()

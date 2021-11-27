@@ -15,11 +15,6 @@ def getAuthHash(userName, masterPassword):
 def generateIV():
     IV = get_random_bytes(16)
     return IV
-
-def generateSalt():
-    IV = get_random_bytes(32)
-    return IV
-
 def encryptVault(vaultString, key):
     data = addPad(vaultString)
     iv = generateIV()
@@ -27,7 +22,6 @@ def encryptVault(vaultString, key):
     encrypted = aes.encrypt(str.encode(data))
     return iv + encrypted
 
-    
 def decryptVault(cipherText, key):
     iv = cipherText[:16]
     aes = AES.new(key, AES.MODE_CBC, iv)
