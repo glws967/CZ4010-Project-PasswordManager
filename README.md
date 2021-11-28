@@ -60,7 +60,7 @@ The password vault will store all the user accounts. This vault will be then sto
 #### Generate Secure random passwords
 To generate a secure random password we make use of the pycryptodome Crypto.Random module. The password will be generated based on what the user has chosen for example to include symbols and digits to the generated password. The user will also be able to generate according to their desired length which is capped to 64 characters.
 
-![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/imp.png?raw=true)
+![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/imp.JPG?raw=true)
 #### Login/Authentication
 1. Generate key using username and password (Using PBKDF2 SHA512 and 200000 round keys)
 2. Generate Authentication Hash using the Key (Using PBKDF2 SHA512 and 1 round key)
