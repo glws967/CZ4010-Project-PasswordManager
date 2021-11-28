@@ -39,12 +39,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         font.setPointSize(8)
         self.btnSettings.setFont(font)
         self.btnSettings.setObjectName("btnSettings")
-        # icon1 = QtGui.QIcon()
-        # directory=str(os.path.dirname(os.path.realpath(__file__))).split("\library",)[0]
-        
-        # icon1.addPixmap(QtGui.QPixmap(directory+"/images/gear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        
-        #self.btnSettings.setIcon(icon1)
         self.btnSettings.setIconSize(QtCore.QSize(40, 30))
         self.btnSettings.clicked.connect(self.OpenSettingsWindow)
         self.btnSettings.setText("Settings")
@@ -89,7 +83,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         
-
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Team Yolo Password Manager"))
@@ -146,7 +139,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         ID = label.objectName().replace("lblAccountName","")
         self.generateInfoLabels(self.currentsession.getUserAccount(self.currentsession.getUserAccountNames()[int(ID)]))
         
-        
     def OnClickRevealOrHide(self,text):
         newtext = ""
         for x in range(len(text)):
@@ -170,6 +162,118 @@ class Ui_MainWindow(QtWidgets.QDialog):
             updateVault(self.currentsession)
             self.generateAccountLabels()
             self.deleteAllwidgetinGridLayout(2,0)
+
+    def editSavedetails(self,item,newAN,newUN,newP,Info):
+        ANupdate = False
+        UNupdate = False
+        Pupdate = False
+        OriginalItem = item
+        TbcItem = item
+        Error = False
+        #check not empty
+        ErrorMessage = ""
+        if newAN and newUN and newP:
+            #check password is >8 and <64
+            if len(newP) >=8 and len(newP)<=64:
+                if newAN != OriginalItem.name :
+                    if not self.currentsession.checkAccountExists(newAN):
+                        TbcItem.name = newAN
+                        ANupdate = True
+                    else:
+                        Error = True
+                        ErrorMessage+="This AccountName already exists<br>"
+                if OriginalItem.username != newUN:
+                            TbcItem.username = newUN
+                            UNupdate = True
+                if OriginalItem.password != newP:
+                            TbcItem.password = newP
+                            Pupdate = True
+                if (Pupdate or UNupdate or ANupdate) and Error==False:
+                            if ANupdate:
+                                item.name = TbcItem.name
+                            if UNupdate:
+                                item.username = TbcItem.username
+                            if Pupdate:
+                                item.password = TbcItem.password
+                            updateVault(self.currentsession)
+                            self.generateInfoLabels(self.currentsession.getUserAccount(item.name))
+                            self.generateAccountLabels()
+                else:
+                    Info.setText(ErrorMessage+"No changes made.")
+
+            else:
+                Info.setText("Password must be <br>1)Less than or equal to 64 characters.<br>2)More than or equal to 8 characters.")
+        else:
+            Info.setText("The above inputs must not be empty.")
+
+    def OpenAddAccountWindow(self):
+                self.w = addaccount.Ui_Form()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(410, 385)
+                self.w.setupUi(self.w,self.currentsession)
+                self.w.emitter.connect(self.onAccountCreated)
+                self.w.Dialog.show()
+
+    def OpenSettingsWindow(self):
+                self.w = settings.Settings()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(322, 160)
+                self.w.setupUi(self.w.Dialog,self.currentsession)
+                self.w.Dialog.show()  
+
+    def OpenGenPassWindow(self): 
+                self.w = genpassword.Ui_GeneratePassword()
+                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
+                self.w.Dialog.setFixedSize(410, 203)
+                self.w.setupUi(self.w.Dialog)
+                self.w.mainpassword.connect(self.setGeneratedPassword)
+                self.w.Dialog.show()
+
+    def searchOnChange(self):
+        self.generateAccountLabels(self.lnSearchAccount.text(),True)
+        self.deleteAllwidgetinGridLayout(2,0)
+        
+    def onAccountCreated(self,accountname):
+                self.generateAccountLabels()
+                
+    def setGeneratedPassword(self,password):
+        if self.leEditPassword.echoMode()==QtWidgets.QLineEdit.Password:
+            self.leEditPassword.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.btnPasswordRH.setText("Conceal")
+        self.leEditPassword.setText(password)
+
+    def OnClickLeRevealOrHide(self,lineEdit):
+        label = self.sender()
+        if lineEdit.echoMode()==QtWidgets.QLineEdit.Normal:
+            lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+            label.setText("Reveal")
+        else:
+            lineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
+            label.setText("Conceal")
+
+    def copyClipBoard(self, text):
+        cb = QtGui.QGuiApplication.clipboard()
+        cb.clear(mode=cb.Clipboard)
+        cb.setText(text, mode=cb.Clipboard)
+        self.clipBoardTimer=QtCore.QTimer()
+        self.clipBoardTimer.start(self.currentsession.clipboard)
+        self.clipBoardTimer.timeout.connect(self.clearClipBoard)
+
+    def clearClipBoard(self):
+        cb = QtGui.QGuiApplication.clipboard()
+        cb.clear(mode=cb.Clipboard)
+        self.clipBoardTimer.stop()
+    
+    def changedfocus(self, old, now):
+        self.lockTimer=QtCore.QTimer()
+        if now == None:
+            if self.currentsession.lock>0:
+                if not self.lockTimer.isActive():
+                    
+                    self.lockTimer.start(self.currentsession.lock)
+                    self.lockTimer.timeout.connect(self.Lock)
+        else:
+                self.lockTimer.stop()
 
     def generateEditInfoLabels(self,items):
         self.deleteAllwidgetinGridLayout(2,0)
@@ -312,94 +416,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         self.scrollContent2.setLayout(self.gridLayout2)
         self.scroll2.setWidget(self.scrollContent2)
 
-    def editSavedetails(self,item,newAN,newUN,newP,Info):
-        ANupdate = False
-        UNupdate = False
-        Pupdate = False
-        OriginalItem = item
-        TbcItem = item
-        Error = False
-        #check not empty
-        ErrorMessage = ""
-        if newAN and newUN and newP:
-            #check password is >8 and <64
-            if len(newP) >=8 and len(newP)<=64:
-                if newAN != OriginalItem.name :
-                    if not self.currentsession.checkAccountExists(newAN):
-                        TbcItem.name = newAN
-                        ANupdate = True
-                    else:
-                        Error = True
-                        ErrorMessage+="This AccountName already exists<br>"
-                if OriginalItem.username != newUN:
-                            TbcItem.username = newUN
-                            UNupdate = True
-                if OriginalItem.password != newP:
-                            TbcItem.password = newP
-                            Pupdate = True
-                if (Pupdate or UNupdate or ANupdate) and Error==False:
-                            if ANupdate:
-                                item.name = TbcItem.name
-                            if UNupdate:
-                                item.username = TbcItem.username
-                            if Pupdate:
-                                item.password = TbcItem.password
-                            updateVault(self.currentsession)
-                            self.generateInfoLabels(self.currentsession.getUserAccount(item.name))
-                            self.generateAccountLabels()
-                else:
-                    Info.setText(ErrorMessage+"No changes made.")
-
-            else:
-                Info.setText("Password must be <br>1)Less than or equal to 64 characters.<br>2)More than or equal to 8 characters.")
-        else:
-            Info.setText("The above inputs must not be empty.")
-
-    def OpenAddAccountWindow(self):
-                self.w = addaccount.Ui_Form()
-                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
-                self.w.Dialog.setFixedSize(410, 385)
-                self.w.setupUi(self.w,self.currentsession)
-                self.w.emitter.connect(self.onAccountCreated)
-                self.w.Dialog.show()
-
-    def OpenSettingsWindow(self):
-                self.w = settings.Settings()
-                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
-                self.w.Dialog.setFixedSize(322, 160)
-                self.w.setupUi(self.w.Dialog,self.currentsession)
-                self.w.Dialog.show()  
-
-    def OpenGenPassWindow(self): 
-                self.w = genpassword.Ui_GeneratePassword()
-                self.w.Dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowCloseButtonHint)
-                self.w.Dialog.setFixedSize(410, 203)
-                self.w.setupUi(self.w.Dialog)
-                self.w.mainpassword.connect(self.setGeneratedPassword)
-                self.w.Dialog.show()
-
-    def searchOnChange(self):
-        self.generateAccountLabels(self.lnSearchAccount.text(),True)
-        self.deleteAllwidgetinGridLayout(2,0)
-        
-    def onAccountCreated(self,accountname):
-                self.generateAccountLabels()
-                
-    def setGeneratedPassword(self,password):
-        if self.leEditPassword.echoMode()==QtWidgets.QLineEdit.Password:
-            self.leEditPassword.setEchoMode(QtWidgets.QLineEdit.Normal)
-            self.btnPasswordRH.setText("Conceal")
-        self.leEditPassword.setText(password)
-
-    def OnClickLeRevealOrHide(self,lineEdit):
-        label = self.sender()
-        if lineEdit.echoMode()==QtWidgets.QLineEdit.Normal:
-            lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
-            label.setText("Reveal")
-        else:
-            lineEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
-            label.setText("Conceal")
-
     def generateInfoLabels(self,items):
         self.deleteAllwidgetinGridLayout(2,0)
         self.btnEdit = QtWidgets.QPushButton()
@@ -493,31 +509,6 @@ class Ui_MainWindow(QtWidgets.QDialog):
         self.btnDelete.setText("\nDelete\n")
         self.scrollContent2.setLayout(self.gridLayout2)
         self.scroll2.setWidget(self.scrollContent2)
-
-    def copyClipBoard(self, text):
-        cb = QtGui.QGuiApplication.clipboard()
-        cb.clear(mode=cb.Clipboard)
-        cb.setText(text, mode=cb.Clipboard)
-        self.clipBoardTimer=QtCore.QTimer()
-        self.clipBoardTimer.start(self.currentsession.clipboard)
-        self.clipBoardTimer.timeout.connect(self.clearClipBoard)
-
-    def clearClipBoard(self):
-        cb = QtGui.QGuiApplication.clipboard()
-        cb.clear(mode=cb.Clipboard)
-        self.clipBoardTimer.stop()
-    
-    
-    def changedfocus(self, old, now):
-        self.lockTimer=QtCore.QTimer()
-        if now == None:
-            if self.currentsession.lock>0:
-                if not self.lockTimer.isActive():
-                    
-                    self.lockTimer.start(self.currentsession.lock)
-                    self.lockTimer.timeout.connect(self.Lock)
-        else:
-                self.lockTimer.stop()
 
     def generateAccountLabels(self, searchName="", searching=False):
         if(searchName==""):
