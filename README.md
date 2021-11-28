@@ -60,6 +60,24 @@ The password vault will store all the user accounts. This vault will be then sto
 #### Generate Secure random passwords
 To generate a secure random password we make use of the pycryptodome Crypto.Random module. The password will be generated based on what the user has chosen for example to include symbols and digits to the generated password. The user will also be able to generate according to their desired length which is capped to 64 characters.
 
+![plot](https://github.com/glws967/CZ4010-Project-PasswordManager/blob/main/images/imp.png?raw=true)
+#### Login/Authentication
+1. Generate key using username and password (Using PBKDF2 SHA512 and 200000 round keys)
+2. Generate Authentication Hash using the Key (Using PBKDF2 SHA512 and 1 round key)
+3. Retrieve Stored Authentication Hash and Encrypted vault from firebase
+4. Compare Stored Authentication Hash with Generated Authentication hash
+5. Successfully logged in and do Vault Decryption
+#### Vault Encryption
+1. Add padding to the end of the plaintext vault
+2. Generate a 16 bytes PRNG Initialization vector (IV)
+3. Encrypt the vault with AES-256 bit CBC Mode, using the key and IV
+4. Return IV+Encrypted Vault
+#### Vault Decryption
+1. Remove the first 16 bytes of IV from the encrypted vault
+2. Decrypt the Encrypted vault with AES-256 bit CBC Mode, Using the key and IV
+3. Remove the padding at the end of the vault
+
+
 ## Security
 ### Confidentiality
 - To achieve this in our project, we make use of the cryptographic algorithms AES(CBC) and hashing algorithm PBKDF2_SHA512.
