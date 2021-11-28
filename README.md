@@ -50,11 +50,11 @@ Firebase is a cloud-hosted real time document store. iOS, Android, and JavaScrip
 #### Amazon DynamoDB
 Developers describe Amazon DynamoDB as "Fully managed NoSQL database service". All data items are stored on Solid State Drives (SSDs), and are replicated across 3 Availability Zones for high availability and durability. 
 #### Final selection for Cloud Storage 
-The main reason we chose Google Firebase is for its Realtime Database as it enables real time syncing of data which helps when syncing data of the password vault. Google Firebase is also very easy to set up as compared to Amazon and there is also a lot of documentation on how to set it up.
+The main reason we chose Google Firebase is for its Realtime Database as enables real time syncing of data which helps when syncing data of the password vault. Google Firebase is also very easy to set up as compared to Amazon and there is also a lot of documentation on how to set it up.
 ## Design
 ### How we secure our Application
 #### Generation and application of Authentication key
-To generate the authentication key, we used 200,000 rounds of PBKDF2-SHA512.. To authenticate when users login we use the authentication key and hash it for one more round to generate an authentication hash. This authentication hash will be stored in Google firebase and will be used to authenticate the login user.
+To generate the authentication key, we used 200,000 rounds of PBKDF2-SHA512. To authenticate when users login we use the authentication key and hash it for one more round to generate an authentication hash. This authentication hash will be stored in Google firebase and will be used to authenticate the login user.
 #### Encryption and Decryption of password Vault
 The password vault will store all the user accounts. This vault will be then stored in the cloud using Google firebase realtime database. The vault is encrypted using the Authentication key with AES-CBC with a 16 bytes IV. After the user have login successfully the encrypted vault will be retrieved from the realtime database and will be decrypted locally using the Authentication key
 #### Generate Secure random passwords
@@ -62,11 +62,13 @@ To generate a secure random password we make use of the pycryptodome Crypto.Rand
 
 ## Security
 ### Confidentiality
-- To achieve this in our project, we make use of a few cryptographic algorithms AES(CBC) and PBKDF2_SHA512.
+- To achieve this in our project, we make use of the cryptographic algorithms AES(CBC) and hashing algorithm PBKDF2_SHA512.
 
 - The entire vault is being encrypted and decrypted locally before sending it to the firebase for storage, this ensures confidentiality of the vault as without decrypting it, the vault will be just a cipher text. This also ensures that no man in the middle attack is possible as we are not sending the key to the database, the key is generated locally.
 
-- By default the user account password is the GUI is concealed so to prevent shoulder surfing 
+- By default all account's password added by the user in the GUI is concealed/masked so to prevent shoulder surfing.
+
+- The application allow auto locking so that if the user is away from their computer and forgot to lock their computer the application will lock itself so to prevent other people from accessing the app.
 
 ### Authentication and Integrity
 When the user login,  Authentication Hash and Encrypted vault will be retrieved from the firebase. The Authentication hash is then compared with the user input. If these are identical, the user will be successfully authenticated and the Vault will be decrypted. Which ensures Authentication and Integrity.
